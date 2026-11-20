@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0f3d12">
+    <title>Grayvon Bingwa Services | Data, SMS and Minutes</title>
+    <meta name="description" content="Bingwa data, SMS and minutes offers. Pay to our till, and report any problem online.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <noscript><p class="noscript">Please turn on JavaScript to see offers and report a problem. You can still call us on 0715 839 658.</p></noscript>
+
+    <header class="bar">
+        <div class="wrap bar-in">
+            <a class="brand" href="#top">Grayvon Bingwa Services</a>
+            <nav class="nav" aria-label="Main">
+                <a class="l" href="#offers">Offers</a>
+                <a class="l" href="#report">Report a problem</a>
+                <a class="l" href="#status">Check my request</a>
+                <a class="b1 call" id="callBtn" href="tel:0715839658">Call us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <h1>Data, SMS and minutes. Fixed fast when something goes wrong.</h1>
+                    <p class="lead">Pata offer hata ukiwa na Okoa. Pay to our till and get your bundle at once. If it does not arrive, tell us here instead of calling.</p>
+                    <div class="row">
+                        <a class="b1" href="#offers">See offers and prices</a>
+                        <a class="b2" href="#report">Report a problem</a>
+                    </div>
+                </div>
+                <div class="till-card">
+                    <div class="small">Lipa na M-PESA, Buy Goods</div>
+                    <div class="till-title">Till Number</div>
+                    <div class="digits" id="tillDigits" aria-label="Till number"></div>
+                    <button class="b1 green" id="copyTill" type="button">Copy till number</button>
+                    <p class="small">M-PESA menu, then Buy Goods &amp; Services, enter the till number and the exact offer amount.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="offers">
+            <div class="wrap">
+                <h2>Offers and prices</h2>
+                <p class="muted mb">Tap an offer to see how to pay for it.</p>
+                <div class="grid" id="offerGrid"></div>
+            </div>
+        </section>
+
+        <section class="section report" id="report">
+            <div class="wrap two">
+                <div>
+                    <h2 class="red">Did not get your offer?</h2>
+                    <p class="lead dark">Choose what the problem is with. We show a quick fix to try. If it still fails, send the form and we sort it out. No need to call.</p>
+                    <div class="step"><i>1</i><p><b>Choose Data, SMS or Minutes</b><br>Then pick what went wrong.</p></div>
+                    <div class="step"><i>2</i><p><b>Try the quick fix</b><br>It solves many cases in a minute.</p></div>
+                    <div class="step"><i>3</i><p><b>Send the form</b><br>Add your M-PESA code. You get a reference number and can watch the status.</p></div>
+                </div>
+
+                <div class="form-card">
+                    <form id="reportForm" novalidate>
+                        <div class="f">
+                            <label for="service">The problem is with</label>
+                            <select id="service" name="service">
+                                <option value="">Choose one</option>
+                                <option value="data">Data</option>
+                                <option value="sms">SMS</option>
+                                <option value="minutes">Minutes</option>
+                            </select>
+                        </div>
+                        <div class="f">
+                            <label for="problem">What went wrong?</label>
+                            <select id="problem" name="problem" disabled></select>
+                        </div>
+                        <div class="tips" id="tips" hidden></div>
+                        <div class="fgrid">
+                            <div class="f">
+                                <label for="offer">Offer you paid for</label>
+                                <select id="offer" name="offer" disabled></select>
+                            </div>
+                            <div class="f">
+                                <label for="amount">Amount paid (Ksh)</label>
+                                <input id="amount" name="amount" inputmode="numeric" placeholder="e.g. 99">
+                            </div>
+                            <div class="f">
+                                <label for="phone">Phone number that should get the offer</label>
+                                <input id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="07XX XXX XXX">
+                            </div>
+                            <div class="f">
+                                <label for="code">M-PESA code</label>
+                                <input id="code" name="code" maxlength="10" autocapitalize="characters" autocomplete="off" placeholder="e.g. UKA1B2C3D4">
+                            </div>
+                        </div>
+                        <div class="f">
+                            <label for="note">More details (optional)</label>
+                            <textarea id="note" name="note" rows="3" maxlength="300"></textarea>
+                        </div>
+                        <div class="hp" aria-hidden="true"><input id="website" tabindex="-1" autocomplete="off"></div>
+                        <p class="error" id="formError" role="alert" hidden></p>
+                        <button class="b2 full" id="sendBtn" type="submit">Send my report</button>
+                    </form>
+
+                    <div class="result" id="result" hidden>
+                        <p><b>Report received.</b> Your reference number is <b class="ref" id="refText"></b></p>
+                        <p class="dark" id="refHint"></p>
+                        <div class="row">
+                            <button class="b3" id="copyRef" type="button">Copy reference</button>
+                            <a class="b3" id="waBtn" href="#" target="_blank" rel="noopener">Also send on WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div class="result warn" id="fallback" hidden>
+                        <p><b>The network is slow, so we could not save your report online.</b></p>
+                        <p class="dark">Nothing is lost. Tap the button to send the same report on WhatsApp.</p>
+                        <div class="row">
+                            <a class="b1" id="waFallback" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+                            <a class="b3" id="callFallback" href="tel:0715839658">Call us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="status">
+            <div class="wrap">
+                <div class="status-card">
+                    <h2>Check my request</h2>
+                    <p class="muted mb">Enter your reference number or the phone number you used.</p>
+                    <form id="statusForm" class="srow">
+                        <div class="f grow">
+                            <label for="ref">Reference or phone</label>
+                            <input id="ref" placeholder="GBS-0421 or 07XX XXX XXX">
+                        </div>
+                        <button class="b1" type="submit" id="checkBtn">Check status</button>
+                    </form>
+                    <p class="found" id="statusMsg" role="status" hidden></p>
+                    <div class="tl" id="timeline" hidden>
+                        <div><span></span>Received</div>
+                        <div><span></span>Being fixed</div>
+                        <div><span></span>Solved</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bar foot">
+        <div class="wrap bar-in">
+            <div>
+                <div class="foot-t">Customer care, 24/7</div>
+                <div class="foot-s" id="footPhone"></div>
+            </div>
+            <div class="foot-s" id="footTill"></div>
+        </div>
+    </footer>
+
+    <!-- Pay pop-up (a normal box, works in every browser) -->
+    <div class="modal" id="payModal" hidden>
+        <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+            <button class="x" id="payClose" type="button" aria-label="Close">&times;</button>
+            <h3 id="payTitle"></h3>
+            <p id="payDesc" class="muted"></p>
+            <ol class="how">
+                <li>Open the M-PESA menu and choose <b>Buy Goods &amp; Services</b>.</li>
+                <li>Enter the till number below.</li>
+                <li>Enter the exact amount: <b id="payAmt"></b>.</li>
+                <li>Enter your M-PESA PIN. The offer arrives on the phone you pay from.</li>
+            </ol>
+            <div class="digits small-d" id="payDigits"></div>
+            <button class="b1 full" id="payCopy" type="button">Copy till number</button>
+            <button class="b3 full gap" id="payReport" type="button">Paid but did not get it? Report it</button>
+        </div>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+</body>
+</html>
